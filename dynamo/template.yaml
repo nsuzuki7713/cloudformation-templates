@@ -1,0 +1,29 @@
+AWSTemplateFormatVersion: "2010-09-09"
+
+Description: dynamodb sample cloudformation
+
+Resources:
+  dynamodb:
+    Type: AWS::DynamoDB::Table
+    Properties:
+      AttributeDefinitions:
+        -
+          AttributeName: id
+          AttributeType: S
+      BillingMode: PROVISIONED
+      KeySchema: 
+        - 
+          AttributeName: id
+          KeyType: HASH
+      ProvisionedThroughput:
+        ReadCapacityUnits: 5
+        WriteCapacityUnits: 5
+      TableName: dynamo-sample-db
+
+Outputs:
+  TableName:
+    Description: Information about the table
+    Value: !Ref dynamodb
+  Arn:
+    Description: Information about the arn
+    Value: !GetAtt dynamodb.Arn

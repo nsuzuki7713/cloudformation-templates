@@ -1,0 +1,3 @@
+# Cloudformationのテンプレート
+
+Cloudformationのsample テンプレートです。
