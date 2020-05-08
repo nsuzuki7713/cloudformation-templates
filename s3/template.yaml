@@ -1,0 +1,32 @@
+AWSTemplateFormatVersion: "2010-09-09"
+
+Description: s3 sample cloudformation
+
+Resources:
+  s3:
+    Type: AWS::S3::Bucket
+    Properties:
+      BucketName: nsuzuki-smaple-s3
+
+Outputs:
+  s3Name:
+    Description: Information about the s3
+    Value: !Ref s3
+  Arn:
+    Description: Information about the arn
+    Value: !GetAtt s3.Arn
+  Arn:
+    Description: Information about the arn
+    Value: !GetAtt s3.Arn
+  DomainName:
+    Description: Information about the DomainName
+    Value: !GetAtt s3.DomainName
+  DualStackDomainName:
+    Description: Information about the DualStackDomainName
+    Value: !GetAtt s3.DualStackDomainName
+  RegionalDomainName:
+    Description: Information about the RegionalDomainName
+    Value: !GetAtt s3.RegionalDomainName
+  WebsiteURL:
+    Description: Information about the WebsiteURL
+    Value: !GetAtt s3.WebsiteURL
