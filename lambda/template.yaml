@@ -1,0 +1,22 @@
+AWSTemplateFormatVersion : '2010-09-09'
+Description: Lambda Function.
+Transform: 'AWS::Serverless-2016-10-31'
+
+Resources:
+  LambdaFunction:
+    Type: 'AWS::Serverless::Function'
+    Properties:
+      CodeUri: ./lambda.zip
+      Handler: handler.lambdaHandler
+      Runtime: nodejs12.x
+      Role: !Sub arn:aws:iam::${AWS::AccountId}:role/lambda_basic_execution
+      Timeout: 30
+      FunctionName: lambda-sample
+
+Outputs:
+  lambda:
+    Description: Information about the LambdaFunction
+    Value: !Ref LambdaFunction
+  Arn:
+    Description: Information about the arn
+    Value: !GetAtt LambdaFunction.Arn
