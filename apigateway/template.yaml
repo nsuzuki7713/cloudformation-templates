@@ -1,0 +1,30 @@
+AWSTemplateFormatVersion: "2010-09-09"
+
+Description: apigateway sample cloudformation
+
+Resources:
+  Api:
+    Type: AWS::ApiGateway::RestApi
+    Properties:
+      Description: cloudformation sample api
+      Name: cloudformationSampleApi
+  MyResource:
+    Type: AWS::ApiGateway::Resource
+    Properties: 
+      RestApiId: !Ref Api
+      ParentId: !GetAtt Api.RootResourceId
+      PathPart: getsample
+  MyMethod:
+    Type: AWS::ApiGateway::Method
+    Properties:
+      HttpMethod: GET
+      ResourceId: !Ref MyResource
+      RestApiId: !Ref Api
+      AuthorizationType: NONE
+      Integration:
+        Type: MOCK
+
+Outputs:
+  RootResourceId:
+    Description: Information RootResourceId
+    Value: !GetAtt Api.RootResourceId
