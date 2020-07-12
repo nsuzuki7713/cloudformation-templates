@@ -1,0 +1,10 @@
+{
+  "parameters": [],
+  "settings": {
+    "cfnspacing": "2",
+    "logicalidstrategy": "longtypeprefixoptionalindexsuffix",
+    "defaultoutput": "cloudformation",
+    "iaclangselect": "typescript",
+    "relatedresourcessetting": "true"
+  }
+}
