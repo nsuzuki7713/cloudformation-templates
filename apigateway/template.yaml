@@ -23,6 +23,18 @@ Resources:
       AuthorizationType: NONE
       Integration:
         Type: MOCK
+        RequestTemplates:
+          application/json: |-
+            {
+              #if( $input.params('myParam') == "myValue" )
+                "statusCode": 200,
+              #else
+                "statusCode": 500,
+              #end
+            }
+      MethodResponses:
+        - StatusCode: 200
+
 
 Outputs:
   RootResourceId:
