@@ -32,7 +32,7 @@
           </v-card-actions>
           <v-card-actions>
             <v-spacer></v-spacer>
-            <a @click="signUp">新規登録</a>
+            <router-link to="/signup">新規登録</router-link>
           </v-card-actions>
           <v-card-actions>
             <v-spacer></v-spacer>

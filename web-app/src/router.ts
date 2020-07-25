@@ -3,6 +3,7 @@ import Router from "vue-router";
 import Home from "./views/Home.vue";
 import Login from "./views/Login.vue";
 import Confirm from "./views/Confirm.vue";
+import SignUp from "./views/SignUp.vue";
 
 Vue.use(Router);
 
@@ -33,6 +34,11 @@ export default new Router({
       path: "/confirm",
       name: "confirm",
       component: Confirm
+    },
+    {
+      path: "/signup",
+      name: "signup",
+      component: SignUp
     }
   ]
 });
