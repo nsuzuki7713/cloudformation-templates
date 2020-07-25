@@ -2,38 +2,25 @@ import Vue from "vue";
 import Router from "vue-router";
 import Home from "./views/Home.vue";
 import Login from "./views/Login.vue";
-import Confirm from "./views/Confirm.vue";
 import SignUp from "./views/SignUp.vue";
+import { Auth } from "aws-amplify";
 
 Vue.use(Router);
 
-export default new Router({
+const router = new Router({
   mode: "history",
   base: process.env.BASE_URL,
   routes: [
     {
       path: "/",
       name: "home",
-      component: Home
-    },
-    {
-      path: "/about",
-      name: "about",
-      // route level code-splitting
-      // this generates a separate chunk (about.[hash].js) for this route
-      // which is lazy-loaded when the route is visited.
-      component: () =>
-        import(/* webpackChunkName: "about" */ "./views/About.vue")
+      component: Home,
+      meta: { requiresAuth: true }
     },
     {
       path: "/login",
       name: "login",
       component: Login
-    },
-    {
-      path: "/confirm",
-      name: "confirm",
-      component: Confirm
     },
     {
       path: "/signup",
@@ -42,3 +29,20 @@ export default new Router({
     }
   ]
 });
+
+router.beforeEach(async (to, from, next) => {
+  if (to.matched.some(record => record.meta.requiresAuth)) {
+    try {
+      await Auth.currentSession();
+      next();
+    } catch (err) {
+      next({
+        path: "/login"
+      });
+    }
+  } else {
+    next();
+  }
+});
+
+export default router;

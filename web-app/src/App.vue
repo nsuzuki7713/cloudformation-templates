@@ -49,6 +49,7 @@ export default Vue.extend({
     async signOut(): Promise<void> {
       try {
         await Auth.signOut();
+        this.$router.push({ name: "login" });
       } catch (error) {
         console.log("error signing out: ", error);
       }

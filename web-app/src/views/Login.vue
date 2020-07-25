@@ -34,10 +34,6 @@
             <v-spacer></v-spacer>
             <router-link to="/signup">新規登録</router-link>
           </v-card-actions>
-          <v-card-actions>
-            <v-spacer></v-spacer>
-            <v-btn color="primary" @click="getData">fetch api</v-btn>
-          </v-card-actions>
         </v-card>
       </v-col>
     </v-row>
@@ -58,40 +54,9 @@ export default Vue.extend({
       try {
         const user = await Auth.signIn(this.username, this.password);
         console.log(user);
+        this.$router.push({ name: "home" });
       } catch (error) {
         console.log("error signing in", error);
-      }
-    },
-    async getData(): Promise<void> {
-      const apiName = "sample";
-      const path = "/pets";
-      const myInit = {
-        headers: {
-          Authorization: `Bearer ${(await Auth.currentSession())
-            .getIdToken()
-            .getJwtToken()}`
-        },
-        response: true
-      };
-      try {
-        const res = await API.get(apiName, path, myInit);
-        console.log(res);
-      } catch (err) {
-        console.log(err);
-      }
-    },
-    async signUp(): Promise<void> {
-      try {
-        const user = await Auth.signUp({
-          username: this.username,
-          password: this.password,
-          attributes: {
-            email: this.username
-          }
-        });
-        console.log({ user });
-      } catch (error) {
-        console.log("error signing up:", error);
       }
     }
   }
