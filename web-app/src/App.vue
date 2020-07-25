@@ -23,7 +23,7 @@
 
       <v-spacer></v-spacer>
 
-      <v-btn text>
+      <v-btn text @click="signOut">
         <span class="mr-2">ログアウト</span>
         <v-icon>mdi-open-in-new</v-icon>
       </v-btn>
@@ -37,12 +37,22 @@
 
 <script lang="ts">
 import Vue from "vue";
+import { Auth } from "aws-amplify";
 
 export default Vue.extend({
   name: "App",
 
   data: () => ({
     //
-  })
+  }),
+  methods: {
+    async signOut(): Promise<void> {
+      try {
+        await Auth.signOut();
+      } catch (error) {
+        console.log("error signing out: ", error);
+      }
+    }
+  }
 });
 </script>

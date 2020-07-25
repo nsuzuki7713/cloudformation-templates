@@ -13,6 +13,7 @@
                 name="login"
                 prepend-icon="mdi-account"
                 type="text"
+                v-model="username"
               ></v-text-field>
 
               <v-text-field
@@ -21,19 +22,78 @@
                 name="password"
                 prepend-icon="mdi-lock"
                 type="password"
+                v-model="password"
               ></v-text-field>
             </v-form>
           </v-card-text>
           <v-card-actions>
             <v-spacer></v-spacer>
-            <v-btn color="primary">ログイン</v-btn>
+            <v-btn color="primary" @click="signIn">ログイン</v-btn>
           </v-card-actions>
           <v-card-actions>
             <v-spacer></v-spacer>
-            <a>新規登録</a>
+            <a @click="signUp">新規登録</a>
+          </v-card-actions>
+          <v-card-actions>
+            <v-spacer></v-spacer>
+            <v-btn color="primary" @click="getData">fetch api</v-btn>
           </v-card-actions>
         </v-card>
       </v-col>
     </v-row>
   </v-container>
 </template>
+
+<script lang="ts">
+import Vue from "vue";
+import { Auth, API } from "aws-amplify";
+
+export default Vue.extend({
+  data: () => ({
+    username: "",
+    password: ""
+  }),
+  methods: {
+    async signIn(): Promise<void> {
+      try {
+        const user = await Auth.signIn(this.username, this.password);
+        console.log(user);
+      } catch (error) {
+        console.log("error signing in", error);
+      }
+    },
+    async getData(): Promise<void> {
+      const apiName = "sample";
+      const path = "/pets";
+      const myInit = {
+        headers: {
+          Authorization: `Bearer ${(await Auth.currentSession())
+            .getIdToken()
+            .getJwtToken()}`
+        },
+        response: true
+      };
+      try {
+        const res = await API.get(apiName, path, myInit);
+        console.log(res);
+      } catch (err) {
+        console.log(err);
+      }
+    },
+    async signUp(): Promise<void> {
+      try {
+        const user = await Auth.signUp({
+          username: this.username,
+          password: this.password,
+          attributes: {
+            email: this.username
+          }
+        });
+        console.log({ user });
+      } catch (error) {
+        console.log("error signing up:", error);
+      }
+    }
+  }
+});
+</script>
