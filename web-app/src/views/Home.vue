@@ -1,11 +1,18 @@
 <template>
-  <div>
-    ログイン中
-    <v-btn color="primary" @click="getData">fetch api</v-btn>
-    <div>
+  <v-container>
+    <v-row>
+      ログイン中
+    </v-row>
+    <v-row>
+      <v-btn color="primary" @click="getData">fetch api</v-btn>
+    </v-row>
+    <v-row>
       {{ response }}
-    </div>
-  </div>
+    </v-row>
+    <v-row class="mt-2">
+      <v-btn color="primary" @click="changePassword">パスワード変更</v-btn>
+    </v-row>
+  </v-container>
 </template>
 
 <script lang="ts">
@@ -34,6 +41,9 @@ export default Vue.extend({
       } catch (err) {
         console.log(err);
       }
+    },
+    changePassword(): void {
+      this.$router.push({ name: "changePassword" });
     }
   }
 });

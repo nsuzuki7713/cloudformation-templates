@@ -3,6 +3,7 @@ import Router from "vue-router";
 import Home from "./views/Home.vue";
 import Login from "./views/Login.vue";
 import SignUp from "./views/SignUp.vue";
+import ChangePassword from "./views/ChangePassword.vue";
 import { Auth } from "aws-amplify";
 
 Vue.use(Router);
@@ -26,6 +27,12 @@ const router = new Router({
       path: "/signup",
       name: "signup",
       component: SignUp
+    },
+    {
+      path: "/changePassword",
+      name: "changePassword",
+      component: ChangePassword,
+      meta: { requiresAuth: true }
     }
   ]
 });
