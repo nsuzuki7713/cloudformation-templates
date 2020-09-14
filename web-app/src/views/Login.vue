@@ -37,12 +37,13 @@
         </v-card>
       </v-col>
     </v-row>
+    <v-btn @click="onClick">クエリ</v-btn>
   </v-container>
 </template>
 
 <script lang="ts">
 import Vue from "vue";
-import { Auth, API } from "aws-amplify";
+import { Auth, API, graphqlOperation } from "aws-amplify";
 
 export default Vue.extend({
   data: () => ({
@@ -50,6 +51,18 @@ export default Vue.extend({
     password: ""
   }),
   methods: {
+    async onClick(): Promise<void> {
+      const none = `query MyQuery {
+  none
+}
+`;
+      try {
+        const posts = await API.graphql(graphqlOperation(none));
+        console.log("posts: ", posts);
+      } catch (e) {
+        console.log(e);
+      }
+    },
     async signIn(): Promise<void> {
       try {
         const user = await Auth.signIn(this.username, this.password);
